@@ -27,7 +27,7 @@ class ChatActivity : BaseActivity() {
 
         btnSend.setOnClickListener {
             if (etText.text.toString().isNotEmpty()) {
-                publishMessage("hussanandrechat", etText.text.toString())
+                mqttClient.publishMessage("hussanandrechat", etText.text.toString())
                 etText.setText("")
             }
         }

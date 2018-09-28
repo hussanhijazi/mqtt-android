@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import com.example.hussan.mqttandroid.R
 import kotlinx.android.synthetic.main.activity_main.btnChat
 import kotlinx.android.synthetic.main.activity_main.btnSensor
+import kotlinx.android.synthetic.main.activity_main.btnVoice
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         btnSensor.setOnClickListener {
             val intent = Intent(this, SensorActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnVoice.setOnClickListener {
+            val intent = Intent(this, VoiceActivity::class.java)
             startActivity(intent)
         }
     }

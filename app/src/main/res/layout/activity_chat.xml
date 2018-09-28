@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.hussan.mqttandroid.ChatActivity">
+    android:background="@color/background">
 
     <TextView
         android:id="@+id/txtMsg"
@@ -26,9 +25,11 @@
         android:layout_marginRight="85dp"
         android:layout_marginStart="84dp"
         android:layout_marginTop="49dp"
+        android:backgroundTint="@android:color/white"
         android:ems="10"
         android:hint="message..."
         android:inputType="textPersonName"
+        android:textColorHint="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtMsg" />

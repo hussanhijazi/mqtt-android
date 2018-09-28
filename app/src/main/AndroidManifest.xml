@@ -23,6 +23,7 @@
         </activity>
         <activity android:name="br.com.hussan.mqttandroid.SensorActivity" />
         <activity android:name="br.com.hussan.mqttandroid.ChatActivity" />
+        <activity android:name="br.com.hussan.mqttandroid.VoiceActivity" />
 
         <service android:name="org.eclipse.paho.android.service.MqttService"></service>
     </application>
