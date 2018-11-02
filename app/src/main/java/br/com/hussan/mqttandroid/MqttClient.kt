@@ -22,12 +22,14 @@ class MqttClient(private val context: Context) {
         const val TAG = "MqttClient"
     }
 
-    fun connect(topic: String, messageCallBack: (message: MqttMessage) -> Unit) {
+    fun connect(topics: Array<String>, messageCallBack: (topic: String, message: MqttMessage) -> Unit) {
         try {
             client.connect()
             client.setCallback(object : MqttCallbackExtended {
                 override fun connectComplete(reconnect: Boolean, serverURI: String) {
-                    subscribeTopic(topic)
+                    topics.forEach {
+                        subscribeTopic(it)
+                    }
                     Log.d(TAG, "Connected to: $serverURI")
                 }
 
@@ -38,7 +40,7 @@ class MqttClient(private val context: Context) {
                 @Throws(Exception::class)
                 override fun messageArrived(topic: String, message: MqttMessage) {
                     Log.d(TAG, "Incoming message from $topic: " + message.toString())
-                    messageCallBack(message)
+                    messageCallBack(topic, message)
                 }
 
                 override fun deliveryComplete(token: IMqttDeliveryToken) {

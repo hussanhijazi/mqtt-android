@@ -6,7 +6,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    lateinit var topic: String
+    lateinit var topic: Array<String>
 
     val mqttClient by lazy {
         MqttClient(this)
@@ -16,7 +16,7 @@ abstract class BaseActivity : AppCompatActivity() {
         const val TAG = "BaseActivity"
     }
 
-    abstract fun messageCallBack(msg: MqttMessage)
+    abstract fun messageCallBack(topic: String, msg: MqttMessage)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

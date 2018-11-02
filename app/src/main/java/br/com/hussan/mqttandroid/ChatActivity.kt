@@ -14,10 +14,10 @@ class ChatActivity : BaseActivity() {
     }
 
     init {
-        topic = "andrehussanchat"
+        topic = arrayOf("andrehussanchat")
     }
 
-    override fun messageCallBack(msg: MqttMessage) {
+    override fun messageCallBack(topic: String, msg: MqttMessage) {
         txtMsg.text = String(msg.payload)
     }
 

@@ -19,10 +19,10 @@ class VoiceActivity : BaseActivity() {
     }
 
     init {
-        topic = "topic"
+        topic = arrayOf("topic")
     }
 
-    override fun messageCallBack(msg: MqttMessage) {
+    override fun messageCallBack(topic: String, msg: MqttMessage) {
 
     }
 
