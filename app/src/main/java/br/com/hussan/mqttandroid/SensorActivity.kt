@@ -12,8 +12,8 @@ class SensorActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "SensorActivity"
-        const val TEMPERATURE_TOPIC = "hussan/temperature"
-        const val HUMIDITY_TOPIC = "hussan/humidity"
+        const val TEMPERATURE_TOPIC = "t0th/temperature"
+        const val HUMIDITY_TOPIC = "t0th/humidity"
     }
 
     val mqttClient by lazy {

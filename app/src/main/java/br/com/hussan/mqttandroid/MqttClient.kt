@@ -12,7 +12,7 @@ import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 
 class MqttClient(private val context: Context) {
-    private val client by lazy {
+    val client by lazy {
         val clientId = MqttClient.generateClientId()
         MqttAndroidClient(context, "tcp://test.mosquitto.org:1883",
                 clientId)
@@ -22,9 +22,13 @@ class MqttClient(private val context: Context) {
         const val TAG = "MqttClient"
     }
 
+    fun connect() {
+        client.connect()
+    }
+
     fun connect(topics: Array<String>, messageCallBack: (topic: String, message: MqttMessage) -> Unit) {
         try {
-            client.connect()
+            connect()
             client.setCallback(object : MqttCallbackExtended {
                 override fun connectComplete(reconnect: Boolean, serverURI: String) {
                     topics.forEach {
@@ -59,11 +63,11 @@ class MqttClient(private val context: Context) {
         try {
             val message = MqttMessage()
             message.payload = msg.toByteArray()
-            client.publish(topic, message)
-            Log.d(TAG, "Message Published to $topic")
-            if (!client.isConnected) {
-                Log.d(TAG, "${client.getBufferedMessageCount()} messages in buffer.")
-            }
+            client.publish(topic, message.payload, 0, true)
+            Log.d(TAG, "$msg published to $topic")
+//            if (!client.isConnected) {
+//                Log.d(TAG, "${client.getBufferedMessageCount()} messages in buffer.")
+//            }
         } catch (e: MqttException) {
             Log.d(TAG, "Error Publishing to $topic: " + e.message)
             e.printStackTrace()
@@ -71,7 +75,7 @@ class MqttClient(private val context: Context) {
 
     }
 
-    private fun subscribeTopic(topic: String) {
+    fun subscribeTopic(topic: String) {
         client.subscribe(topic, 0).actionCallback = object : IMqttActionListener {
             override fun onSuccess(asyncActionToken: IMqttToken) {
                 Log.d(TAG, "Subscribed to $topic")
