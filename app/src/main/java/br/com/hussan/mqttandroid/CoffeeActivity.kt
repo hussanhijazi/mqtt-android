@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.hussan.mqttandroid.R
 import kotlinx.android.synthetic.main.activity_coffee.btnCoffee
+import kotlinx.android.synthetic.main.activity_coffee.imgCoffee
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttCallbackExtended
 import org.eclipse.paho.client.mqttv3.MqttMessage
@@ -64,11 +65,14 @@ class CoffeeActivity : AppCompatActivity() {
     }
 
     private fun updateButton(topic: String, message: MqttMessage) {
+        imgCoffee.show()
         if (String(message.payload) == "on") {
             btnCoffee.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
             onOff = true
+            imgCoffee.setImageDrawable(ContextCompat.getDrawable(this@CoffeeActivity, R.drawable.smile))
         } else {
             btnCoffee.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray))
+            imgCoffee.setImageDrawable(ContextCompat.getDrawable(this@CoffeeActivity, R.drawable.upside_down_smile))
             onOff = false
         }
     }

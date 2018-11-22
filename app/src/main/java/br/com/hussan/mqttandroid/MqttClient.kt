@@ -14,7 +14,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage
 class MqttClient(private val context: Context) {
     val client by lazy {
         val clientId = MqttClient.generateClientId()
-        MqttAndroidClient(context, "tcp://test.mosquitto.org:1883",
+        MqttAndroidClient(context, "tcp://iot.eclipse.org:1883",
                 clientId)
     }
 
