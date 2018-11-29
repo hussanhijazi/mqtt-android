@@ -2,7 +2,6 @@ package br.com.hussan.mqttandroid
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import com.example.hussan.mqttandroid.R
 import kotlinx.android.synthetic.main.activity_sensor.txtHumidity
 import kotlinx.android.synthetic.main.activity_sensor.txtTemperature
@@ -29,7 +28,6 @@ class SensorActivity : AppCompatActivity() {
     }
 
     private fun setData(topic: String, msg: MqttMessage) {
-        Log.d("h2", msg.toString())
         when (topic) {
             TEMPERATURE_TOPIC -> {
                 txtTemperature.text = " ${String(msg.payload)} ° c"
@@ -44,6 +42,5 @@ class SensorActivity : AppCompatActivity() {
         super.onDestroy()
         mqttClient.close()
     }
-
 }
 

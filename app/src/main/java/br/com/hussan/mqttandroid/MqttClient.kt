@@ -22,16 +22,13 @@ class MqttClient(private val context: Context) {
         const val TAG = "MqttClient"
     }
 
-    fun connect() {
-        client.connect()
-    }
-
-    fun connect(topics: Array<String>, messageCallBack: (topic: String, message: MqttMessage) -> Unit) {
+    fun connect(topics: Array<String>? = null,
+                messageCallBack: ((topic: String, message: MqttMessage) -> Unit)? = null) {
         try {
-            connect()
+            client.connect()
             client.setCallback(object : MqttCallbackExtended {
                 override fun connectComplete(reconnect: Boolean, serverURI: String) {
-                    topics.forEach {
+                    topics?.forEach {
                         subscribeTopic(it)
                     }
                     Log.d(TAG, "Connected to: $serverURI")
@@ -44,7 +41,7 @@ class MqttClient(private val context: Context) {
                 @Throws(Exception::class)
                 override fun messageArrived(topic: String, message: MqttMessage) {
                     Log.d(TAG, "Incoming message from $topic: " + message.toString())
-                    messageCallBack(topic, message)
+                    messageCallBack?.invoke(topic, message)
                 }
 
                 override fun deliveryComplete(token: IMqttDeliveryToken) {
@@ -65,9 +62,6 @@ class MqttClient(private val context: Context) {
             message.payload = msg.toByteArray()
             client.publish(topic, message.payload, 0, true)
             Log.d(TAG, "$msg published to $topic")
-//            if (!client.isConnected) {
-//                Log.d(TAG, "${client.getBufferedMessageCount()} messages in buffer.")
-//            }
         } catch (e: MqttException) {
             Log.d(TAG, "Error Publishing to $topic: " + e.message)
             e.printStackTrace()
@@ -75,8 +69,8 @@ class MqttClient(private val context: Context) {
 
     }
 
-    fun subscribeTopic(topic: String) {
-        client.subscribe(topic, 0).actionCallback = object : IMqttActionListener {
+    fun subscribeTopic(topic: String, qos: Int = 0) {
+        client.subscribe(topic, qos).actionCallback = object : IMqttActionListener {
             override fun onSuccess(asyncActionToken: IMqttToken) {
                 Log.d(TAG, "Subscribed to $topic")
             }
@@ -94,5 +88,4 @@ class MqttClient(private val context: Context) {
             close()
         }
     }
-
 }
