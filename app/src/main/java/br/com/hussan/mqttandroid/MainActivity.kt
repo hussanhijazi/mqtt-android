@@ -3,6 +3,7 @@ package br.com.hussan.mqttandroid
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import br.com.hussan.mqttandroid.coffee.CoffeeActivity
 import com.example.hussan.mqttandroid.R
 import kotlinx.android.synthetic.main.activity_main.btnChat
 import kotlinx.android.synthetic.main.activity_main.btnCoffee

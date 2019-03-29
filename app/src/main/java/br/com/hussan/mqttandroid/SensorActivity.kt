@@ -2,6 +2,7 @@ package br.com.hussan.mqttandroid
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import br.com.hussan.mqttandroid.mqtt.MqttClient
 import com.example.hussan.mqttandroid.R
 import kotlinx.android.synthetic.main.activity_sensor.txtHumidity
 import kotlinx.android.synthetic.main.activity_sensor.txtTemperature
@@ -23,7 +24,7 @@ class SensorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sensor)
 
-        mqttClient.connect(arrayOf(TEMPERATURE_TOPIC, HUMIDITY_TOPIC), ::setData)
+        mqttClient.setCallBack(arrayOf(TEMPERATURE_TOPIC, HUMIDITY_TOPIC), ::setData)
 
     }
 

@@ -1,4 +1,4 @@
-package br.com.hussan.mqttandroid
+package br.com.hussan.mqttandroid.mqtt
 
 import android.content.Context
 import android.util.Log
@@ -12,47 +12,45 @@ import org.eclipse.paho.client.mqttv3.MqttException
 import org.eclipse.paho.client.mqttv3.MqttMessage
 
 class MqttClient(private val context: Context) {
-    val client by lazy {
-        val clientId = MqttClient.generateClientId()
-        MqttAndroidClient(context, "tcp://iot.eclipse.org:1883",
-                clientId)
-    }
+
+    lateinit var client: MqttAndroidClient
 
     companion object {
         const val TAG = "MqttClient"
     }
 
-    fun connect(topics: Array<String>? = null,
-                messageCallBack: ((topic: String, message: MqttMessage) -> Unit)? = null) {
-        try {
-            client.connect()
-            client.setCallback(object : MqttCallbackExtended {
-                override fun connectComplete(reconnect: Boolean, serverURI: String) {
-                    topics?.forEach {
-                        subscribeTopic(it)
-                    }
-                    Log.d(TAG, "Connected to: $serverURI")
+    fun connect(broker: String) {
+        client =
+                MqttAndroidClient(context, broker,
+                        MqttClient.generateClientId())
+        client.connect()
+    }
+
+    fun setCallBack(topics: Array<String>? = null,
+                    messageCallBack: ((topic: String, message: MqttMessage) -> Unit)? = null) {
+        client.setCallback(object : MqttCallbackExtended {
+            override fun connectComplete(reconnect: Boolean, serverURI: String) {
+                topics?.forEach {
+                    subscribeTopic(it)
                 }
+                Log.d(TAG, "Connected to: $serverURI")
+            }
 
-                override fun connectionLost(cause: Throwable) {
-                    Log.d(TAG, "The Connection was lost.")
-                }
+            override fun connectionLost(cause: Throwable) {
+                Log.d(TAG, "The Connection was lost.")
+            }
 
-                @Throws(Exception::class)
-                override fun messageArrived(topic: String, message: MqttMessage) {
-                    Log.d(TAG, "Incoming message from $topic: " + message.toString())
-                    messageCallBack?.invoke(topic, message)
-                }
+            @Throws(Exception::class)
+            override fun messageArrived(topic: String, message: MqttMessage) {
+                Log.d(TAG, "Incoming message from $topic: " + message.toString())
+                messageCallBack?.invoke(topic, message)
+            }
 
-                override fun deliveryComplete(token: IMqttDeliveryToken) {
+            override fun deliveryComplete(token: IMqttDeliveryToken) {
 
-                }
-            })
+            }
+        })
 
-
-        } catch (e: MqttException) {
-            e.printStackTrace()
-        }
     }
 
     fun publishMessage(topic: String, msg: String) {
@@ -87,5 +85,10 @@ class MqttClient(private val context: Context) {
             unregisterResources()
             close()
         }
+    }
+
+    fun disconnect() {
+        if (client.isConnected)
+            client.disconnect()
     }
 }

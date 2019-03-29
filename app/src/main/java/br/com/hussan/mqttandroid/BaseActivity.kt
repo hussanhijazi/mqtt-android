@@ -2,6 +2,7 @@ package br.com.hussan.mqttandroid
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import br.com.hussan.mqttandroid.mqtt.MqttClient
 import org.eclipse.paho.client.mqttv3.MqttMessage
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -21,7 +22,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mqttClient.connect(topic, ::messageCallBack)
+        mqttClient.setCallBack(topic, ::messageCallBack)
 
     }
 

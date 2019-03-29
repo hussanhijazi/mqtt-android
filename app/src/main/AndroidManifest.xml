@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.hussan.mqttandroid">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -13,7 +14,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="br.com.hussan.mqttandroid.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +26,8 @@
         <activity android:name="br.com.hussan.mqttandroid.SensorActivity" />
         <activity android:name="br.com.hussan.mqttandroid.ChatActivity" />
         <activity android:name="br.com.hussan.mqttandroid.VoiceActivity" />
-        <activity android:name="br.com.hussan.mqttandroid.CoffeeActivity" />
+        <activity android:name="br.com.hussan.mqttandroid.coffee.CoffeeActivity" />
+        <activity android:name="br.com.hussan.mqttandroid.coffee.ConfigActivity" />
 
         <service android:name="org.eclipse.paho.android.service.MqttService"></service>
     </application>

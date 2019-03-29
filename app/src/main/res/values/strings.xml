@@ -3,4 +3,9 @@
     <string name="on">ligar</string>
     <string name="off">desligar</string>
     <string name="voice_prompt">Fala ai...</string>
+    <string name="config">Config</string>
+    <string name="broker">Broker</string>
+    <string name="topic">Tópico</string>
+    <string name="save">Salvar</string>
+    <string name="type_all_fields">Preencha todos os campos</string>
 </resources>
