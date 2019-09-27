@@ -14,6 +14,8 @@ class SensorActivity : AppCompatActivity() {
         const val TAG = "SensorActivity"
         const val TEMPERATURE_TOPIC = "t0th/temperature"
         const val HUMIDITY_TOPIC = "t0th/humidity"
+        const val BROKER: String = "tcp://broker.hivemq.com"
+
     }
 
     val mqttClient by lazy {
@@ -24,6 +26,7 @@ class SensorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sensor)
 
+        mqttClient.connect(BROKER)
         mqttClient.setCallBack(arrayOf(TEMPERATURE_TOPIC, HUMIDITY_TOPIC), ::setData)
 
     }
